@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Anniversary</title>
+    <style>
+        body {
+            font-family: "Kanit", sans-serif;
+            background: linear-gradient(to bottom, #ff9a9e, #fad0c4);
+            text-align: center;
+            padding: 20px;
+            color: #fff;
+        }
+
+        .container {
+            max-width: 700px;
+            margin: auto;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .image-container {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .image-container img {
+            width: 45%;
+            border-radius: 10px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+        }
+
+        .time,
+        .next-anniversary {
+            font-size: 1.8rem;
+            color: #ffd700;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="image-container">
+            <img src="./jpg/Elvenia ; gaming & pfps.jpg" alt="Person 1">
+            <img src="./jpg/Anime on Twitter.jpg" alt="Person 2">
+        </div>
+        <h1>Our Anniversary</h1>
+        <h2>Since the beginning...</h2>
+        <div class="time" id="timeElapsed">...</div>
+        <h2>The next anniversary is in...</h2>
+        <div class="next-anniversary" id="nextAnniversary">...</div>
+        <h2>Total time together...</h2>
+        <div class="years-and-months" id="yearsAndMonths">...</div>
+        <p>Thank you for always being by my side 💖</p>
+    </div>
+
+    <script>
+        // Set the start date
+        const startDate = new Date("2020-01-01T00:00:00");
+
+        function updateTime() {
+            const now = new Date();
+            const diffTime = now - startDate;
+
+            // Calculate days, hours, minutes, seconds
+            const days = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diffTime % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((diffTime % (1000 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diffTime % (1000 * 60)) / 1000);
+
+            // Display elapsed time
+            document.getElementById("timeElapsed").textContent =
+                `${days} days ${hours} hours ${minutes} minutes ${seconds} seconds`;
+
+            // Calculate total years and months
+            const totalYears = now.getFullYear() - startDate.getFullYear();
+            let totalMonths = now.getMonth() - startDate.getMonth();
+            if (totalMonths < 0) {
+                totalYears -= 1;
+                totalMonths += 12;
+            }
+
+            // Display years and months
+            document.getElementById("yearsAndMonths").textContent =
+                `${totalYears} years ${totalMonths} months`;
+
+            // Calculate next anniversary
+            const currentYear = now.getFullYear();
+            const nextAnniversaryDate = new Date(startDate);
+            nextAnniversaryDate.setFullYear(currentYear);
+
+            // If this year's anniversary has passed, use the next year
+            if (now > nextAnniversaryDate) {
+                nextAnniversaryDate.setFullYear(currentYear + 1);
+            }
+
+            const diffToNextAnniversary = nextAnniversaryDate - now;
+            const daysToNextAnniversary = Math.ceil(diffToNextAnniversary / (1000 * 60 * 60 * 24));
+
+            // Display next anniversary
+            document.getElementById("nextAnniversary").textContent =
+                `${daysToNextAnniversary} days (${nextAnniversaryDate.toLocaleDateString("en-US")})`;
+        }
+
+        // Update time every second
+        setInterval(updateTime, 1000);
+    </script>
+</body>
+
+</html>
